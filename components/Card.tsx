@@ -10,7 +10,7 @@ import { CardData } from "../App";
 
 type Props = {
     cardData: CardData;
-    showBack: boolean;
+    showBackside: boolean;
 };
 
 const VISA = require("../assets/creditcard/visa.png");
@@ -19,7 +19,7 @@ const DinersClib = require("../assets/creditcard/dinersclub.png");
 const MasterCard = require("../assets/creditcard/mastercard.png");
 const Discover = require("../assets/creditcard/discover.png");
 
-function Card({ cardData, showBack }: Props) {
+function Card({ cardData, showBackside }: Props) {
     const [imageType, setImageType] = useState<ImageSourcePropType>(VISA);
 
     useEffect(() => {
@@ -86,6 +86,84 @@ function Card({ cardData, showBack }: Props) {
             .join("")
             .replaceAll(" ", "    ");
     };
+
+    if (showBackside) {
+        return (
+            <View style={{ borderRadius: 8, overflow: "hidden" }}>
+                <ImageBackground
+                    style={{
+                        width: 675 / 2.2,
+                        height: 435 / 2.2,
+                        borderRadius: 16,
+                        transform: [{ scaleX: -1 }],
+                    }}
+                    resizeMode="cover"
+                    source={require("../assets/creditcard/18.jpeg")}
+                >
+                    <View
+                        style={{
+                            height: "100%",
+                            backgroundColor: "rgba(0,0,0,0.2)",
+                            flexDirection: "column",
+                            alignItems: "flex-end",
+                            justifyContent: "flex-end",
+                            padding: 16,
+                            transform: [{ scaleX: -1 }],
+                        }}
+                    >
+                        <View
+                            style={{
+                                position: "absolute",
+                                width: "120%",
+                                top: 20,
+                                right: 0,
+                                height: 45,
+                                backgroundColor: "#000000bb",
+                            }}
+                        ></View>
+
+                        <Text
+                            style={{
+                                color: "white",
+                                textAlign: "right",
+                                marginBottom: 2,
+                                fontSize: 12,
+                                fontWeight: "600",
+                            }}
+                        >
+                            CVV
+                        </Text>
+                        <View
+                            style={{
+                                width: "100%",
+                                justifyContent: "center",
+                                height: 35,
+                                backgroundColor: "white",
+                                paddingRight: 10,
+                                borderRadius: 4,
+                            }}
+                        >
+                            <Text style={{ textAlign: "right" }}>
+                                {"*".repeat(cardData.cvv.length)}
+                            </Text>
+                        </View>
+
+                        <Image
+                            source={imageType}
+                            resizeMode="contain"
+                            style={{
+                                marginTop: 15,
+                                opacity: 0.7,
+                                maxWidth: 70,
+                                maxHeight: 50,
+                                marginBottom: -10,
+                            }}
+                        />
+                    </View>
+                </ImageBackground>
+            </View>
+        );
+    }
     return (
         <View style={{ borderRadius: 8, overflow: "hidden" }}>
             <ImageBackground

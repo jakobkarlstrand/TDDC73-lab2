@@ -14,10 +14,29 @@ type InputProps = {
     value: string;
     onChange: (s: string) => void;
     keyboardType: KeyboardTypeOptions;
+    onFocus?: Function;
+    onBlur?: Function;
 };
 
-function Input({ label, value, onChange, keyboardType }: InputProps) {
+function Input({
+    label,
+    value,
+    onChange,
+    keyboardType,
+    onFocus,
+    onBlur,
+}: InputProps) {
     const [focused, setFocused] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (focused && onFocus) {
+            onFocus();
+        } else {
+            if (onBlur) {
+                onBlur();
+            }
+        }
+    }, [focused]);
 
     return (
         <View style={styles.container}>

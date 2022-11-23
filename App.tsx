@@ -34,6 +34,7 @@ const defaultData: CardData = {
 
 export default function App() {
     const [cardData, setCardData] = useState<CardData>(defaultData);
+    const [showBackside, setShowBackside] = useState<boolean>(false);
     const formatAndValidateCardNumber = (txt: string) => {
         const numbers = txt.replace(/[^0-9]/g, "");
 
@@ -74,7 +75,7 @@ export default function App() {
                     elevation: 16,
                 }}
             >
-                <Card cardData={cardData} showBack={false} />
+                <Card showBackside={showBackside} cardData={cardData} />
             </View>
 
             <View style={styles.inputwrapper}>
@@ -170,9 +171,11 @@ export default function App() {
                             keyboardType="ascii-capable"
                             label="CVV"
                             value={cardData.cvv}
+                            onFocus={() => setShowBackside(true)}
+                            onBlur={() => setShowBackside(false)}
                             onChange={(t: string) =>
                                 setCardData((prev) => {
-                                    return { ...prev, cvv: t };
+                                    return { ...prev, cvv: t.slice(0, 3) };
                                 })
                             }
                         />
