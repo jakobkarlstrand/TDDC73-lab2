@@ -92,7 +92,10 @@ export default function App() {
                     value={cardData.name}
                     onChange={(t: string) =>
                         setCardData((prev) => {
-                            return { ...prev, name: t };
+                            return {
+                                ...prev,
+                                name: t.replace(/[^a-zA-Z ]/g, ""),
+                            };
                         })
                     }
                 />

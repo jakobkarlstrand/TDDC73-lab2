@@ -45,6 +45,7 @@ function Input({
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
                 keyboardType={keyboardType}
+                maxLength={19}
                 style={[
                     styles.input,
                     focused && styles.focus,
